@@ -1676,5 +1676,23 @@ function xmldb_core_upgrade($oldversion=0) {
         }
     }
 
+    if ($oldversion < 2020013006) {
+        $table = new XMLDBTable('view');
+        if (table_exists($table)) {
+            log_debug('Remove host FK from view table');
+            $key = new XMLDBKEY('submittedhostfk');
+            $key->setAttributes(XMLDB_KEY_FOREIGN, array('submittedhost'), 'host', array('wwwroot'));
+            drop_key($table, $key);
+        }
+
+        $table = new XMLDBTable('collection');
+        if (table_exists($table)) {
+            log_debug('Remove host FK from collection table');
+            $key = new XMLDBKEY('submittedhostfk');
+            $key->setAttributes(XMLDB_KEY_FOREIGN, array('submittedhost'), 'host', array('wwwroot'));
+            drop_key($table, $key);
+        }
+    }
+
     return $status;
 }
