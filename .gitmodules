@@ -1,0 +1,4 @@
+[submodule "htdocs/module/monitor"]
+	branch = mh1904
+	path = htdocs/module/monitor
+	url = git@git.catalyst-au.net:elearning/mahara-mod_monitor.git
