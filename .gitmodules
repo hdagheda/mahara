@@ -2,3 +2,7 @@
 	branch = mh2004-monash-arts
 	path = htdocs/theme/monasharts
 	url = git@git.catalyst-au.net:monash/mahara-theme_monasharts.git
+[submodule "htdocs/module/monitor"]
+	branch = mh1904
+	path = htdocs/module/monitor
+	url = git@git.catalyst-au.net:elearning/mahara-mod_monitor.git
