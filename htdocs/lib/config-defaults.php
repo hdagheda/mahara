@@ -752,7 +752,6 @@ $cfg->sessionhandler = 'file';
 //$cfg->redissentinelservers = "localhost:26379";  // A comma seperated string of hosts:ports
 //$cfg->redismastergroup = 'mymaster';
 //$cfg->redisprefix = 'mahara';
-//$cfg->redisserver = "localhost:26379"; // A string of host:port. Need to set either the 'redissentinelservers' options if using a sentinel server or the 'redisserver' option if not.
 
 /**
  * SQL session store configs for SimpleSAMLphp
