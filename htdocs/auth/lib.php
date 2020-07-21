@@ -718,19 +718,6 @@ function is_redis_configured() {
 
 function get_redis_master() {
     $master = null;
-
-    $redisserver = get_config('redisserver');
-
-    // Skipping REDIS SENTINEL master interrogation if redisserver variable configured in config.php.
-    if ($redisserver) {
-        $master = new \stdClass();
-	    list($redisserverhost, $redisserverport) = explode(':', $redisserver);
-        $master->ip = $redisserverhost;
-        $master->port = $redisserverport;
-
-        return $master;
-    }
-
     foreach (get_redis_servers() as $server) {
         if (!empty($server['server']) && !empty($server['mastergroup']) && !empty($server['prefix'])) {
             require_once(get_config('libroot') . 'redis/sentinel.php');
@@ -743,11 +730,11 @@ function get_redis_master() {
 }
 
 function get_redis_servers() {
-    $redisserver = get_config('redisserver') ? get_config('redisserver') : get_config('redissentinelservers');
+    $redissentinelservers = get_config('redissentinelservers');
     $redismastergroup = get_config('redismastergroup');
     $redisprefix = get_config('redisprefix');
     $redis_servers[] = array(
-        'server' => $redisserver,
+        'server' => $redissentinelservers,
         'mastergroup' => $redismastergroup,
         'prefix' => $redisprefix
     );
