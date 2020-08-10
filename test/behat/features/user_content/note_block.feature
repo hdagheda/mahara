@@ -21,10 +21,7 @@ Scenario: Adding and deleting a Note block (Bug 1424512)
     # Configuring the block
     When I follow "Drag to add a new block" in the "blocktype sidebar" property
     And I press "Add"
-    And I click on "Show more"
-    And I click on "Show more"
-    And I click on "Show more"
-    And I click on "Note" in the "Content types" property
+    And I click on blocktype "Note"
     And I set the following fields to these values:
     | Block title | Note block 1 |
     | Block content | This is a test |
@@ -34,16 +31,14 @@ Scenario: Adding and deleting a Note block (Bug 1424512)
     # Add a second note to the page
     When I follow "Drag to add a new block" in the "blocktype sidebar" property
     And I press "Add"
-    And I click on "Show more"
-    And I click on "Show more"
-    And I click on "Show more"
-    And I click on "Note" in the "Content types" property
+    And I click on blocktype "Note"
     And I follow "Use content from another note"
     And I select the radio "Note block 1"
     # Set title after selection as selection updates the title with original one
     And I set the following fields to these values:
     | Block title | Note block 2 |
     And I press "Save"
+    And I scroll to the base of id "column-container"
     And I should see "This is a test" in the block "Note block 2"
     # Verifying the attachment saved
     And I choose "Notes" in "Create" from main menu

@@ -794,6 +794,7 @@ class Collection {
      * @return object $institution or false
      */
      public function get_framework_institution() {
+        require_once('institution.php');
         if (!empty($this->group)) {
             return false;
         }
@@ -1130,28 +1131,29 @@ class Collection {
      * returns the url that we need to redirect to sfter editing a collection
      */
     public function post_edit_redirect_url($new=false, $copy=false, $urlparams=null) {
+        $redirecturl = get_config('wwwroot');
         if ($new || $copy) {
             $urlparams['id'] = $this->get('id');
-            $redirecturl = '/collection/views.php';
+            $redirecturl .= 'collection/views.php';
         }
         else {
             if ($this->get('group')) {
                 // Group owned collection
-                $redirecturl = '/view/groupviews.php';
+                $redirecturl .= 'view/groupviews.php';
             }
             else if ($this->get('institution')) {
                 if ($this->get('institution') == 'mahara') {
                     // Site owned collection
-                    $redirecturl = '/admin/site/views.php';
+                    $redirecturl .= 'admin/site/views.php';
                 }
                 else {
                     // Institution owned collection
-                    $redirecturl = '/view/institutionviews.php';
+                    $redirecturl .= 'view/institutionviews.php';
                 }
             }
             else {
                 // User owned collection
-                $redirecturl = '/view/index.php';
+                $redirecturl .= 'view/index.php';
             }
         }
         if ($urlparams) {

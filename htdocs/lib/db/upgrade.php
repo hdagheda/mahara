@@ -1327,6 +1327,9 @@ function xmldb_core_upgrade($oldversion=0) {
             $count = 0;
             $limit = 1000;
             $total = count($artefacts);
+
+            // enable user error handling, this will ignore warnings if the xml is malfomed
+            libxml_use_internal_errors(true);
             // Loop through all of them and update the description
             $dom = new DOMDocument();
             $dom->preserveWhiteSpace = false;
@@ -1348,6 +1351,7 @@ function xmldb_core_upgrade($oldversion=0) {
                     set_time_limit(30);
                 }
             }
+            libxml_clear_errors();
         }
     }
 
@@ -1691,6 +1695,26 @@ function xmldb_core_upgrade($oldversion=0) {
             $key = new XMLDBKEY('submittedhostfk');
             $key->setAttributes(XMLDB_KEY_FOREIGN, array('submittedhost'), 'host', array('wwwroot'));
             drop_key($table, $key);
+        }
+    }
+
+    if ($oldversion < 2020013008) {
+        log_debug('Fixing skins for new format options');
+        if ($skins = get_column('skin', 'id')) {
+            require_once('skin.php');
+            safe_require('artefact', 'file');
+            foreach ($skins as $skinid) {
+                $skinobj = new Skin($skinid);
+                $viewskin = $skinobj->get('viewskin');
+                if (!isset($viewskin['view_block_header_font'])) {
+                    $viewskin['view_block_header_font'] = '';
+                }
+                if (!isset($viewskin['view_block_header_font_color'])) {
+                    $viewskin['view_block_header_font_color'] = '';
+                }
+                $skinobj->set('viewskin', $viewskin);
+                $skinobj->commit();
+            }
         }
     }
 
