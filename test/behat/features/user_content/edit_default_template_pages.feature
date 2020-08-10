@@ -25,6 +25,7 @@ Feature: Site admin includes special blocks for the "Profile" site template and 
     And I click on "Show more"
     And I click on "Show more"
     And I click on "Show more"
+    And I wait "1" seconds
     And I should see "My portfolios" in the "Content types" property
     And I should see "Watched pages" in the "Content types" property
     And I click on "My friends" in the "Content types" property
@@ -32,10 +33,7 @@ Feature: Site admin includes special blocks for the "Profile" site template and 
     # add "My groups" block and verify it is displayed on the page
     When I follow "Drag to add a new block" in the "blocktype sidebar" property
     And I press "Add"
-    And I click on "Show more"
-    And I click on "Show more"
-    And I click on "Show more"
-    And I click on "My groups" in the "Content types" property
+    And I click on blocktype "My groups"
     And I press "Save"
 
     # Site admin Site admin set up "Profile template" to include the following:

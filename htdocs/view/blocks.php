@@ -40,7 +40,7 @@ if (empty($id)) {
 if (!empty($id) && empty($view)) {
     $view = new View($id);
 }
-
+$viewid = $view->get('id'); // for tinymce editor
 if (!$USER->can_edit_view($view)) {
     throw new AccessDeniedException();
 }
@@ -218,7 +218,8 @@ else {
 $blocksjs ="
 $(function () {
     var options = {
-        verticalMargin: 10,
+        verticalMargin: 5,
+        cellHeight: 10,
         resizable: false,
         acceptWidgets: '.blocktype-drag',
         draggable: {
@@ -266,7 +267,7 @@ $addform = pieform(array(
         ),
         'submit' => array(
             'type' => 'submitcancel',
-            'class' => 'btn-secondary',
+            'subclass' => array('btn-secondary'),
             'value' => array(get_string('add'), get_string('cancel')),
         ),
     ),

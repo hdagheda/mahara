@@ -75,13 +75,13 @@ function site_statistics($full=false) {
             $data['uptodate'] = get_string('uptodate', 'admin');
         }
         else {
-            $download_page = 'https://launchpad.net/mahara/+download';
+            $download_page = 'https://www.mahara.org/download';
             $data['strlatestversion'] = get_string('latestversionis', 'admin', $download_page, $latestversion);
         }
     }
     if ($branchlatest = get_config('latest_branch_version')) {
         if ($data['release'] != $branchlatest) {
-            $download_page = 'https://launchpad.net/mahara/+milestone/' . $branchlatest;
+            $download_page = 'https://www.mahara.org/download';
             $data['strlatestbranchversion'] = get_string('latestbranchversionis', 'admin', $download_page, $branchlatest);
         }
     }
@@ -3079,7 +3079,8 @@ function content_stats_table($limit, $offset, $extra) {
         $fromsql .= " WHERE sr.id IN (SELECT id FROM {site_registration} ORDER BY time DESC LIMIT 2)";
     }
     $fromsql .= " AND sd.value " . (is_postgres() ? '~ E' : 'REGEXP ') . "'^[0-9]+$'
-                  AND sd.field NOT LIKE '%version'";
+                  AND sd.field NOT LIKE '%version'
+                  AND sd.field NOT IN ('allowpublicviews', 'allowpublicprofiles', 'newstats')";
     $regdata = get_records_sql_array("SELECT DISTINCT sr.id, sr.time " . $fromsql . " ORDER BY sr.time DESC", $values);
 
     $count = ($regdata) ? count_records_sql("SELECT COUNT(*) " . $fromsql . " AND sr.id = " . $regdata[0]->id, $values) : 0;
@@ -4501,7 +4502,7 @@ function report_config_form($extra, $institutionelement) {
 
     $form['elements']['submit'] = array(
         'type'  => 'submitcancel',
-        'class' => 'btn-primary',
+        'subclass' => array('btn-primary'),
         'value' => array(get_string('submit'), get_string('cancel')),
         'goto'  => format_goto(get_config('wwwroot') . 'admin/users/statistics.php?institution=' . $institution, $extra->extra, array('sort', 'sortdesc')),
     );

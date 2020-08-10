@@ -59,10 +59,10 @@ Feature: Mahara users can create their blogs
     And I click on "Edit" in "Page UserA_01" card menu
     When I follow "Drag to add a new block" in the "blocktype sidebar" property
     And I press "Add"
-    And I click on "Show more"
-    And I click on "Tagged journal entries" in the "Content types" property
+    And I click on blocktype "Tagged journal entries"
     And I fill in select2 input "instconf_tagselect" with "blogentry" and select "blogentry"
     And I press "Save"
+    And I wait "1" seconds
     Then I should see "Journal entries with tag \"blogentry\""
     And I choose "Journals" in "Create" from main menu
     And I follow "My new journal"

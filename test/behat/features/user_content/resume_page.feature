@@ -80,6 +80,7 @@ Scenario: Editing Education and Employment info
     And I attach the file "Image2.png" to "Attach file"
     And I click on "addeducationhistory_submit"
     And I click on "Move down" in "North American Cultural Studies" row
+    And I wait "1" seconds
     And I click on "Move up" in "North American Cultural Studies" row
     And I scroll to the id "main-nav"
     And I should see "Saved successfully"
@@ -117,9 +118,11 @@ Scenario: Editing Education and Employment info
     And I click on "addemploymenthistory_submit"
     Then I should see "Saved successfully"
     And I click on "Move down" in "Test Analyst" row
+    And I wait "1" seconds
     And I click on "Move up" in "Test Analyst" row
     # delete employment and education history  (Bug 1755669)
     And I scroll to the base of id "employmenthistorylist"
+    And I wait "1" seconds
     And I click on "Delete \"North American Cultural Studies (Masters of Arts) at University of Life\"" delete button
     And I click on "Delete \"Code Ninja: Xero\"" delete button
 
@@ -128,10 +131,7 @@ Scenario: Editing Education and Employment info
     And I click on "Edit" in "Profile page" card menu
     When I follow "Drag to add a new block" in the "blocktype sidebar" property
     And I press "Add"
-    And I click on "Show more"
-    And I click on "Show more"
-    And I click on "Show more"
-    And I click on "My entire résumé" in the "Content types" property
+    And I click on blocktype "My entire résumé"
     And I set the field "Block title" to "My entire résumé"
     And I select "Automatically retract" from "Retractable"
     And I press "Save"
@@ -183,6 +183,7 @@ Scenario: Adding Achievements
     And I scroll to the id "main-nav"
     And I should see "Saved successfully"
     And I click on "Move down" in "Scrum Master Certification" row
+    And I wait "1" seconds
     And I click on "Move up" in "Scrum Master Certification" row
 
     And I scroll to the base of id "addbookbutton"
@@ -208,8 +209,10 @@ Scenario: Adding Achievements
     And I attach the file "Image2.png" to "addbook_attachments_files_0"
     And I click on "addbook_submit"
     And I scroll to the id "main-nav"
+    And I wait "1" seconds
     And I should see "Saved successfully"
     And I click on "Move down" in "Measurement of the neutron beta decay asymmetry using machine learning" row
+    And I wait "1" seconds
     And I click on "Move up" in "Measurement of the neutron beta decay asymmetry using machine learning" row
 
     # Adding Professional memberships
@@ -238,6 +241,7 @@ Scenario: Adding Achievements
     And I scroll to the id "main-nav"
     And I should see "Saved successfully"
     And I click on "Move down" in "Accredited Technologist" row
+    And I wait "1" seconds
     And I click on "Move up" in "Accredited Technologist" row
     # check achievements can be deleted (Bug 1755669)
     And I click on "Delete \"sdrtyh\"" delete button
@@ -318,10 +322,7 @@ Scenario: Adding interests
     And I click on "Edit" in "Page UserA_01" card menu
     When I follow "Drag to add a new block" in the "blocktype sidebar" property
     And I press "Add"
-    And I click on "Show more"
-    And I click on "Show more"
-    And I click on "Show more"
-    And I click on "One résumé field" in the "Content types" property
+    And I click on blocktype "One résumé field"
     And I select the radio "Interests"
     And I press "Save"
     And I display the page

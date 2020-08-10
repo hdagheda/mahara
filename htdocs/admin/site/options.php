@@ -896,14 +896,14 @@ function siteoptions_submit(Pieform $form, $values) {
       $fields = array_merge($fields, array('dropdownmenu'));
     }
     $count = 0;
-    $where_sql = " WHERE \"admin\" = 0 AND id != 0";
+    $where_sql = " WHERE u.admin = 0 AND id != 0";
     // if default account lifetime expiry has no end date
     if (empty($values['defaultaccountlifetime'])) {
         if ($values['defaultaccountlifetimeupdate'] == 'all') {
             // need to remove user expiry
             db_begin();
-            $count = count_records_sql("SELECT COUNT(*) FROM {usr} $where_sql");
-            execute_sql("UPDATE {usr} SET expiry = NULL $where_sql");
+            $count = count_records_sql("SELECT COUNT(*) FROM {usr} u " . $where_sql);
+            execute_sql("UPDATE {usr} u SET expiry = NULL " . $where_sql);
             db_commit();
         }
         else {
@@ -918,16 +918,16 @@ function siteoptions_submit(Pieform $form, $values) {
         if ($values['defaultaccountlifetimeupdate'] == 'some') {
             // and the user's expiry is not set
             $where_sql .= " AND expiry IS NULL";
-            $count = count_records_sql("SELECT COUNT(*) FROM {usr} $where_sql");
+            $count = count_records_sql("SELECT COUNT(*) FROM {usr} u " . $where_sql);
             db_begin();
-            execute_sql("UPDATE {usr} SET expiry = ? $where_sql", array(format_date($user_expiry)));
+            execute_sql("UPDATE {usr} u SET expiry = ? " . $where_sql, array(format_date($user_expiry)));
             db_commit();
         }
         else if ($values['defaultaccountlifetimeupdate'] == 'all') {
             // and the user's expiry is set
             db_begin();
-            $count = count_records_sql("SELECT COUNT(*) FROM {usr} $where_sql");
-            execute_sql("UPDATE {usr} SET expiry = ? $where_sql", array(format_date($user_expiry)));
+            $count = count_records_sql("SELECT COUNT(*) FROM {usr} u " . $where_sql);
+            execute_sql("UPDATE {usr} u SET expiry = ? " . $where_sql, array(format_date($user_expiry)));
             db_commit();
         }
     }
@@ -1012,7 +1012,7 @@ function siteoptions_submit(Pieform $form, $values) {
     if ($fieldsfailed > 0) {
         $form->reply(PIEFORM_ERR, array(
             'message' => get_string('setsiteoptionsfailednotice', 'admin', $fieldsfailed),
-            'goto'    => '/admin/site/options.php',
+            'goto'    => get_config('wwwroot') . 'admin/site/options.php',
         ));
     }
 
@@ -1036,7 +1036,7 @@ function siteoptions_submit(Pieform $form, $values) {
     if ($count) {
         $message .= ' ' . get_string('numberusersupdated','admin', $count);
     }
-    $form->reply(PIEFORM_OK, array('message' => $message, 'goto' => '/admin/site/options.php'));
+    $form->reply(PIEFORM_OK, array('message' => $message, 'goto' => get_config('wwwroot') . 'admin/site/options.php'));
 }
 
 $usermultipleinstitutions = (!empty(users_in_multiple_institutions()) ? "true" : "false");
